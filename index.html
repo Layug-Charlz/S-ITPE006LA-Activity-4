@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Onboarding Form</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="onboarding-container">
+        <div class="form-wrapper">
+            <!-- Step Indicator -->
+            <div class="step-indicator">
+                <div class="step-item active" data-step="1">
+                    <div class="step-number">1</div>
+                    <div class="step-label">Personal Info</div>
+                </div>
+                <div class="step-line"></div>
+                <div class="step-item" data-step="2">
+                    <div class="step-number">2</div>
+                    <div class="step-label">Account Setup</div>
+                </div>
+                <div class="step-line"></div>
+                <div class="step-item" data-step="3">
+                    <div class="step-number">3</div>
+                    <div class="step-label">Confirmation</div>
+                </div>
+            </div>
+
+            <!-- Form Container -->
+            <form id="onboardingForm" class="onboarding-form" novalidate>
+                <!-- Step 1: Personal Information -->
+                <fieldset class="form-step active" data-step="1">
+                    <legend class="step-title">Personal Information</legend>
+                    <p class="step-subtitle">Tell us about yourself</p>
+
+                    <div class="form-group">
+                        <label for="fullName" class="form-label">Full Name</label>
+                        <input
+                            type="text"
+                            id="fullName"
+                            name="fullName"
+                            class="form-input"
+                            placeholder="John Doe"
+                            required
+                            aria-describedby="fullNameError"
+                        >
+                        <span id="fullNameError" class="error-message" role="alert"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email" class="form-label">Email Address</label>
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            class="form-input"
+                            placeholder="you@example.com"
+                            required
+                            aria-describedby="emailError"
+                        >
+                        <span id="emailError" class="error-message" role="alert"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone" class="form-label">Phone Number</label>
+                        <input
+                            type="tel"
+                            id="phone"
+                            name="phone"
+                            class="form-input"
+                            placeholder="+1 (555) 000-0000"
+                            required
+                            aria-describedby="phoneError"
+                        >
+                        <span id="phoneError" class="error-message" role="alert"></span>
+                    </div>
+                </fieldset>
+
+                <!-- Step 2: Account Setup -->
+                <fieldset class="form-step" data-step="2">
+                    <legend class="step-title">Account Setup</legend>
+                    <p class="step-subtitle">Create your account credentials</p>
+
+                    <div class="form-group">
+                        <label for="username" class="form-label">Username</label>
+                        <input
+                            type="text"
+                            id="username"
+                            name="username"
+                            class="form-input"
+                            placeholder="johndoe"
+                            required
+                            aria-describedby="usernameError"
+                        >
+                        <span id="usernameError" class="error-message" role="alert"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password" class="form-label">Password</label>
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            class="form-input"
+                            placeholder="••••••••"
+                            required
+                            aria-describedby="passwordError"
+                        >
+                        <span id="passwordError" class="error-message" role="alert"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="confirmPassword" class="form-label">Confirm Password</label>
+                        <input
+                            type="password"
+                            id="confirmPassword"
+                            name="confirmPassword"
+                            class="form-input"
+                            placeholder="••••••••"
+                            required
+                            aria-describedby="confirmPasswordError"
+                        >
+                        <span id="confirmPasswordError" class="error-message" role="alert"></span>
+                    </div>
+                </fieldset>
+
+                <!-- Step 3: Confirmation -->
+                <fieldset class="form-step" data-step="3">
+                    <legend class="step-title">Review & Confirm</legend>
+                    <p class="step-subtitle">Verify your information before completing</p>
+
+                    <div class="summary-section">
+                        <div class="summary-group">
+                            <h3 class="summary-title">Personal Information</h3>
+                            <div class="summary-item">
+                                <span class="summary-label">Full Name</span>
+                                <span id="summaryFullName" class="summary-value"></span>
+                            </div>
+                            <div class="summary-item">
+                                <span class="summary-label">Email</span>
+                                <span id="summaryEmail" class="summary-value"></span>
+                            </div>
+                            <div class="summary-item">
+                                <span class="summary-label">Phone</span>
+                                <span id="summaryPhone" class="summary-value"></span>
+                            </div>
+                        </div>
+
+                        <div class="summary-group">
+                            <h3 class="summary-title">Account Setup</h3>
+                            <div class="summary-item">
+                                <span class="summary-label">Username</span>
+                                <span id="summaryUsername" class="summary-value"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="confirmation-message">
+                        <div class="success-icon">✓</div>
+                        <h2 class="success-title">Ready to go!</h2>
+                        <p class="success-text">Click the "Complete" button below to finish your onboarding.</p>
+                    </div>
+                </fieldset>
+
+                <!-- Form Navigation -->
+                <div class="form-navigation">
+                    <button
+                        type="button"
+                        id="prevBtn"
+                        class="btn btn-secondary"
+                        aria-label="Go to previous step"
+                    >
+                        ← Previous
+                    </button>
+                    <button
+                        type="button"
+                        id="nextBtn"
+                        class="btn btn-primary"
+                        aria-label="Go to next step or complete onboarding"
+                    >
+                        Next
+                    </button>
+                </div>
+            </form>
+
+            <!-- Success Modal -->
+            <div id="successModal" class="modal" role="dialog" aria-labelledby="successTitle" aria-hidden="true">
+                <div class="modal-content">
+                    <div class="modal-icon">✓</div>
+                    <h2 id="successTitle" class="modal-title">Onboarding Complete!</h2>
+                    <p class="modal-text">Your account has been successfully created. Welcome aboard!</p>
+                    <button type="button" class="btn btn-primary" id="closeModalBtn" aria-label="Close success modal">
+                        Get Started
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
