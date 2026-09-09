@@ -226,8 +226,74 @@ class OnboardingForm {
     }
 
     isValidPhone(phone) {
-        const phoneRegex = /^[\d\s\-\+\(\)]+$/;
-        return phoneRegex.test(phone) && phone.replace(/\D/g, '').length >= 10;
+        if (!phone || typeof phone !== 'string') {
+            return false;
+        }
+
+        const trimmed = phone.trim();
+
+        // Check if it contains only valid phone characters
+        const validCharsRegex = /^[\d\s\-\+\(\)\.]+$/;
+        if (!validCharsRegex.test(trimmed)) {
+            return false;
+        }
+
+        // Extract only digits to check minimum length
+        const digitsOnly = trimmed.replace(/\D/g, '');
+        if (digitsOnly.length < 10) {
+            return false;
+        }
+
+        // Check for valid phone number patterns
+        // Valid patterns: (123) 456-7890, 123-456-7890, +1 123 456 7890, etc.
+        const validPhonePatterns = [
+            /^\+?[\d]{1,3}[\s\-]?[\(]?[\d]{2,4}[\)]?[\s\-]?[\d]{2,4}[\s\-]?[\d]{4}$/, // International format
+            /^[\(][\d]{3}[\)][\s]?[\d]{3}[\-][\d]{4}$/, // (123) 456-7890
+            /^[\d]{3}[\-][\d]{3}[\-][\d]{4}$/, // 123-456-7890
+            /^[\d]{3}[\s][\d]{3}[\s][\d]{4}$/, // 123 456 7890
+            /^[\d]{10}$/, // 1234567890
+            /^\+[\d\s\-\(\)\.]{9,}$/ // International with +
+        ];
+
+        const isValidFormat = validPhonePatterns.some(pattern => pattern.test(trimmed));
+        if (!isValidFormat) {
+            return false;
+        }
+
+        // Reject structurally invalid patterns like multiple nested parentheses
+        const openParens = (trimmed.match(/\(/g) || []).length;
+        const closeParens = (trimmed.match(/\)/g) || []).length;
+
+        // Parentheses must be balanced
+        if (openParens !== closeParens) {
+            return false;
+        }
+
+        // Only allow parentheses around the area code (max 1 opening, 1 closing)
+        if (openParens > 1 || closeParens > 1) {
+            return false;
+        }
+
+        // If there are parentheses, they should wrap exactly 3 digits (area code)
+        if (openParens === 1) {
+            const parenMatch = trimmed.match(/\([\d]{3}\)/);
+            if (!parenMatch) {
+                return false;
+            }
+        }
+
+        // Check for excessive special characters or spacing
+        // Allow max 4 dashes, 4 spaces, 0-1 plus sign
+        const dashCount = (trimmed.match(/\-/g) || []).length;
+        const spaceCount = (trimmed.match(/\s/g) || []).length;
+        const plusCount = (trimmed.match(/\+/g) || []).length;
+        const dotCount = (trimmed.match(/\./g) || []).length;
+
+        if (dashCount > 4 || spaceCount > 4 || plusCount > 1 || dotCount > 1) {
+            return false;
+        }
+
+        return true;
     }
 
     setFieldError(field, error) {
