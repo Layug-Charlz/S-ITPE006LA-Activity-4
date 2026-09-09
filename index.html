@@ -10,21 +10,21 @@
     <div class="onboarding-container">
         <div class="form-wrapper">
             <!-- Step Indicator -->
-            <div class="step-indicator">
-                <div class="step-item active" data-step="1">
-                    <div class="step-number">1</div>
+            <div class="step-indicator" role="tablist" aria-label="Onboarding steps">
+                <button class="step-item active" data-step="1" role="tab" aria-selected="true" aria-label="Step 1: Personal Info">
+                    <div class="step-number" aria-hidden="true">1</div>
                     <div class="step-label">Personal Info</div>
-                </div>
-                <div class="step-line"></div>
-                <div class="step-item" data-step="2">
-                    <div class="step-number">2</div>
+                </button>
+                <div class="step-line" aria-hidden="true"></div>
+                <button class="step-item" data-step="2" role="tab" aria-selected="false" aria-label="Step 2: Account Setup">
+                    <div class="step-number" aria-hidden="true">2</div>
                     <div class="step-label">Account Setup</div>
-                </div>
-                <div class="step-line"></div>
-                <div class="step-item" data-step="3">
-                    <div class="step-number">3</div>
+                </button>
+                <div class="step-line" aria-hidden="true"></div>
+                <button class="step-item" data-step="3" role="tab" aria-selected="false" aria-label="Step 3: Confirmation">
+                    <div class="step-number" aria-hidden="true">3</div>
                     <div class="step-label">Confirmation</div>
-                </div>
+                </button>
             </div>
 
             <!-- Form Container -->

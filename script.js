@@ -40,6 +40,45 @@ class OnboardingForm {
             input.addEventListener('blur', () => this.validateField(input));
             input.addEventListener('input', () => this.clearFieldError(input));
         });
+        this.bindStepIndicators();
+    }
+
+    bindStepIndicators() {
+        this.stepItems.forEach(item => {
+            item.addEventListener('click', (e) => this.handleStepIndicatorClick(e, item));
+        });
+    }
+
+    handleStepIndicatorClick(e, stepItem) {
+        e.preventDefault();
+        const targetStep = parseInt(stepItem.getAttribute('data-step'));
+
+        if (targetStep < this.currentStep) {
+            this.goToStep(targetStep);
+        } else if (targetStep === this.currentStep) {
+            return;
+        } else {
+            this.showNavigationBlockedMessage(targetStep);
+        }
+    }
+
+    showNavigationBlockedMessage(targetStep) {
+        const message = document.createElement('div');
+        message.className = 'navigation-blocked-message';
+        message.setAttribute('role', 'alert');
+        message.textContent = `Please complete the current step before proceeding to step ${targetStep}`;
+
+        const formStep = document.querySelector('.form-step.active');
+        formStep.parentNode.insertBefore(message, formStep);
+
+        setTimeout(() => {
+            message.classList.add('show');
+        }, 10);
+
+        setTimeout(() => {
+            message.classList.remove('show');
+            setTimeout(() => message.remove(), 300);
+        }, 3000);
     }
 
     handleNextClick(e) {
@@ -90,11 +129,16 @@ class OnboardingForm {
         this.stepItems.forEach((item, index) => {
             const stepNum = index + 1;
             item.classList.remove('active', 'completed');
+            item.setAttribute('aria-selected', stepNum === this.currentStep ? 'true' : 'false');
 
             if (stepNum === this.currentStep) {
                 item.classList.add('active');
+                item.disabled = false;
             } else if (stepNum < this.currentStep) {
                 item.classList.add('completed');
+                item.disabled = false;
+            } else {
+                item.disabled = true;
             }
         });
 

@@ -76,6 +76,46 @@ body.dark-mode .form-wrapper {
     flex: 1;
     cursor: pointer;
     transition: all 0.3s ease;
+    background: none;
+    border: none;
+    padding: 0;
+    font-family: inherit;
+}
+
+.step-item:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+.step-item:disabled .step-number {
+    cursor: not-allowed;
+}
+
+.step-item.completed {
+    cursor: pointer;
+}
+
+.step-item.completed:hover .step-number {
+    transform: scale(1.15);
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+body.dark-mode .step-item.completed:hover .step-number {
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+}
+
+.step-item:focus {
+    outline: none;
+}
+
+.step-item:focus-visible .step-number {
+    outline: 2px solid #667eea;
+    outline-offset: 2px;
+    border-radius: 50%;
+}
+
+body.dark-mode .step-item:focus-visible .step-number {
+    outline-color: #8b5cf6;
 }
 
 .step-number {
@@ -690,6 +730,42 @@ body.dark-mode .modal-text {
 
     .modal-text {
         font-size: 13px;
+    }
+}
+
+/* Navigation Blocked Message */
+.navigation-blocked-message {
+    background: #fef3c7;
+    border-left: 4px solid #f59e0b;
+    color: #92400e;
+    padding: 12px 16px;
+    border-radius: 6px;
+    margin-bottom: 24px;
+    font-size: 14px;
+    font-weight: 500;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    animation: slideDown 0.3s ease-out;
+}
+
+body.dark-mode .navigation-blocked-message {
+    background: #78350f;
+    border-left-color: #f59e0b;
+    color: #fcd34d;
+}
+
+.navigation-blocked-message.show {
+    opacity: 1;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
     }
 }
 
